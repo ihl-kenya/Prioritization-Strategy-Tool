@@ -2,7 +2,7 @@
 App for prioritizing Health Products and Technologies at county level
 
 
-### Background
+## Background
 With the completion of the quantification process, advocacy for more commodities is an ongoing process, however, we are alive to the fact that resources are limited and many times the allocated resources fall way below what is the actual needs by the health facilities. Thus, there is need to prioritize what to procure with the limited resources that are available. 
 
 The different players thus need to select health products and technologies that ensure that the right product that meets the needs of the customers is available at the service delivery point. There must be clear criteria for the prioritization of the right products based on their quality and effectiveness in treatment, disease burdens, and affordability. National essential medicines lists and essential service package plans contain medicines and non-drug consumables that are considered vital for programs. 
