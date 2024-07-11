@@ -3,7 +3,7 @@ from sqlalchemy.orm import relationship
 
 from .database import Base
 
-# Database tables will be declared here
+# Database classes that interact with the database will be defined here
 
 
 class User(Base):
