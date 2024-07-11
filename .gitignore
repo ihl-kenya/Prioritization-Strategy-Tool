@@ -163,4 +163,4 @@ cython_debug/
 
 
 # database
-PST.db
+/app/database/PST.db
