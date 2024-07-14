@@ -164,3 +164,6 @@ cython_debug/
 
 # database
 /app/database/PST.db
+
+# alembic ini file -- contains database connection string
+alembic.ini
