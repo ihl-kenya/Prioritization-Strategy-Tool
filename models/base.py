@@ -2,15 +2,15 @@
 from sqlalchemy import create_engine  # for connecting to DB
 from sqlalchemy.ext.declarative import declarative_base  # for ORM mappings
 from sqlalchemy.orm import sessionmaker  # handles database sessions
+from config import Database
 
-# Path to our SQLite database
-DATABASE_URL = "sqlite:///./app/database/PST.db"
+db = Database()
+
+# Path to our postgreSQL DB
+DATABASE_URL = db.connection_string
 
 # Create a connection engine to the database
-# connect_args={"check_same_thread": False} is required for SQLite to allow multiple threads to interact with the database
-engine = create_engine(
-    url=DATABASE_URL, connect_args={"check_same_thread": False}
-)
+engine = create_engine(url=DATABASE_URL)
 
 # Create a configured "Session" class
 SessionLocal = sessionmaker(
