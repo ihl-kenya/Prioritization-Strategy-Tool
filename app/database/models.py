@@ -3,14 +3,15 @@ from sqlalchemy.orm import relationship
 
 from .database import Base
 
-# Database classes that interact with the database will be defined here
+# Classes that interact with the database
 
 
 class User(Base):
     __tablename__ = "users"
 
-    user_id = Column(Integer, primary_key=True, index=True)
-    username = Column(String, index=True, nullable=False)
+    user_id = Column(Integer, primary_key=True, index=True, autoincrement=True)
+    # username might not be necessary, we can let teams login with their emails and password
+    # username = Column(String, index=True, nullable=False)
     email = Column(String, index=True, unique=True)
     password = Column(String)  # research hashing method
     role = Column(String, index=True, nullable=False)  # should be enumerated
