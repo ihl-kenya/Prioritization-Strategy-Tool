@@ -10,5 +10,5 @@ class Forecast(Base):
     pack_size = Column(String)
     price_kes = Column(Float)
     quantity_required_for_one_year = Column(Float)
-    facility_id = Column(Integer, ForeignKey("facilities.facility_id"))
+    facility_id = Column(String, ForeignKey("facilities.facility_id"))
     product_id = Column(Integer, ForeignKey("products.product_id"))
