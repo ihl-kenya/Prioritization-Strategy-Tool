@@ -7,6 +7,7 @@ class Forecast(Base):
 
     key = Column(Integer, primary_key=True, autoincrement=True)
     product_name = Column(String, nullable=False)
+    ven = Column(String, nullable=False)
     pack_size = Column(String)
     price_kes = Column(Float)
     quantity_required_for_one_year = Column(Float)
