@@ -9,7 +9,6 @@ class Product(Base):
                         autoincrement=True, index=True)
     product_name = Column(String, index=True, nullable=False)
     product_category = Column(String, index=True, nullable=False)
-    ven = Column(String, nullable=False)
     is_equipment = Column(Boolean)
     kmfl_classification = Column(String)
     is_rmnch = Column(Boolean)

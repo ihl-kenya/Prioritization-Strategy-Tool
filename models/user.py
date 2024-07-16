@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, Boolean
 from .base import Base
 
 
@@ -12,3 +12,5 @@ class User(Base):
     password = Column(String, nullable=False)  # research hashing method
     # should be enumerated
     access_level = Column(String, index=True, nullable=False)
+    org_id = Column(String, index=True)
+    approved = Column(Boolean)
