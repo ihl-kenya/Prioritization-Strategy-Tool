@@ -5,8 +5,8 @@ from .base import Base
 class Organizations(Base):
     __tablename__ = "organizations"
 
-    key = Column(Integer, primary_key=True, autoincrement=True)
-    org_id = Column(String)
-    org_name = Column(String)
-    org_level = Column(Integer)
-    parent_id = Column(String)
+    org_id = Column(String, primary_key=True, nullable=False, index=True)
+    org_name = Column(String, index=True)
+    org_level = Column(Integer, index=True)
+    parent_id = Column(String, index=True)
+    mfl_code = Column(Integer, index=True)
