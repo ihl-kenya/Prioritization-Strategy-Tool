@@ -11,6 +11,7 @@ class UserServices:
     def __init__(self) -> None:
         pass
 
+    # -----------------------hash a password---------------#
     def hash_password(self, password: str) -> str:
         # salt ensures that the same passwords result in different hashes
         salt = bcrypt.gensalt()
@@ -19,7 +20,8 @@ class UserServices:
 
         return hashed_password.decode("utf-8")
 
-    def new_user(self, user_details: UserCreate, db: Session):
+    # -----------------add a new user to db ------------------------#
+    def new_user(self, user_details: UserCreate, db: Session) -> str:
         # checking whether email is already registered in db
         db_user = db.query(Users).filter(
             Users.email == user_details.email).first()
@@ -47,6 +49,7 @@ class UserServices:
                 status_code=status.HTTP_400_BAD_REQUEST, detail="Could not create user"
             )
 
+    # ---------------Verify login ----------------------#
     @staticmethod
     def login_user(credentials: UserLogin, db: Session) -> str:
         db_user = db.query(Users)\
@@ -63,6 +66,7 @@ class UserServices:
             )
         return "Login successful"
 
+    # -----------------Update a user's data in db---------------------------------#
     def update_user(self, email: str, user_details: UserCreate, db: Session) -> str:
         db_user = db.query(Users).filter(Users.email == email).first()
         if db_user is None:
@@ -85,4 +89,24 @@ class UserServices:
             raise HTTPException(
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
                 detail=f"org_id '{user_details.org_id}' is invalid"
+            )
+
+    @staticmethod
+    def remove_user(email: str, db: Session) -> str:
+        db_user = db.query(Users).filter(Users.email == email).first()
+
+        if db_user is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"User with {email=} not found!"
+            )
+        try:
+            db.delete(db_user)
+            db.commit()
+            return "User removed successfully"
+        except Exception as e:
+            print(f"{e}")
+            raise HTTPException(
+                status_code=status.HTTP_400_BAD_REQUEST,
+                detail=f"Could not delete user"
             )
