@@ -1,8 +1,8 @@
-"""Creating first Tables
+"""Custom messaged
 
-Revision ID: 8eac8169dfd0
+Revision ID: 99a27191b5d4
 Revises: 
-Create Date: 2024-07-18 08:52:17.146799
+Create Date: 2024-07-18 12:22:29.570036
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '8eac8169dfd0'
+revision: str = '99a27191b5d4'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -70,13 +70,12 @@ def upgrade() -> None:
     sa.Column('value_of_quantities_required_for_12_months', sa.Float(), nullable=True),
     sa.Column('funding', sa.String(), nullable=True),
     sa.Column('pack_size', sa.String(), nullable=True),
-    sa.Column('finacial_year', sa.String(), nullable=True),
+    sa.Column('financial_year', sa.String(), nullable=True),
     sa.ForeignKeyConstraint(['org_id'], ['facilities.org_id'], ),
     sa.ForeignKeyConstraint(['product_id'], ['products.product_id'], ),
     sa.PrimaryKeyConstraint('forecast_id')
     )
     op.create_index(op.f('ix_forecasts_funding'), 'forecasts', ['funding'], unique=False)
-    op.create_index(op.f('ix_forecasts_org_id'), 'forecasts', ['org_id'], unique=False)
     op.create_index(op.f('ix_forecasts_ven'), 'forecasts', ['ven'], unique=False)
     op.create_table('users',
     sa.Column('user_id', sa.Integer(), autoincrement=True, nullable=False),
@@ -101,7 +100,6 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_users_access_level'), table_name='users')
     op.drop_table('users')
     op.drop_index(op.f('ix_forecasts_ven'), table_name='forecasts')
-    op.drop_index(op.f('ix_forecasts_org_id'), table_name='forecasts')
     op.drop_index(op.f('ix_forecasts_funding'), table_name='forecasts')
     op.drop_table('forecasts')
     op.drop_index(op.f('ix_products_product_name'), table_name='products')
