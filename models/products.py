@@ -5,7 +5,7 @@ from .base import Base
 class Product(Base):
     __tablename__ = "products"
 
-    product_id = Column(Integer, nullable=False)
+    product_id = Column(Integer, primary_key=True)
     product_name = Column(String, index=True, nullable=False)
     product_category = Column(String, index=True, nullable=False)
     is_equipment = Column(Boolean)

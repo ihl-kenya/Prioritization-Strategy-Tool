@@ -167,3 +167,11 @@ cython_debug/
 
 # alembic ini file -- contains database connection string
 alembic.ini
+
+# data pipelines folder
+/data_pipelines
+.Rproj.user
+
+
+# working file
+working_file.ipynb
