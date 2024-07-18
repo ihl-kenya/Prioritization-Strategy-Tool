@@ -7,7 +7,10 @@ def create_app() -> FastAPI:
     user_router = create_user_router()
 
     # instantiate app
-    app = FastAPI()
+    app = FastAPI(
+        title="Prioritization Strategy Tool",
+        description="Backend services",
+    )
 
     # include routes in app
     app.include_router(user_router)
