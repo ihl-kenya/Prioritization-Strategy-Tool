@@ -12,9 +12,11 @@ class UserServices:
         pass
 
     def hash_password(self, password: str) -> str:
+        # salt ensures that the same passwords result in different hashes
         salt = bcrypt.gensalt()
-        hashed_password = bcrypt.hashpw(
-            password=password.encode("utf-8"), salt=salt)
+        hashed_password = bcrypt\
+            .hashpw(password=password.encode("utf-8"), salt=salt)
+
         return hashed_password.decode("utf-8")
 
     def new_user(self, user_details: UserCreate, db: Session):
@@ -42,18 +44,17 @@ class UserServices:
             return "User Created Successfully"
         except Exception:
             raise HTTPException(
-                status_code=status.HTTP_400_BAD_REQUEST,
-                detail="Could not create user"
+                status_code=status.HTTP_400_BAD_REQUEST, detail="Could not create user"
             )
 
     @staticmethod
     def login_user(credentials: UserLogin, db: Session) -> str:
-        db_user = db.query(Users).filter(
-            Users.email == credentials.email).first()
+        db_user = db.query(Users)\
+            .filter(Users.email == credentials.email).first()
+
         if db_user is None:
             raise HTTPException(
-                status_code=status.HTTP_404_NOT_FOUND,
-                detail="User not found!"
+                status_code=status.HTTP_404_NOT_FOUND, detail="User not found!"
             )
         hashed_password = db_user.password
         if not bcrypt.checkpw(credentials.password.encode("utf-8"), hashed_password.encode("utf-8")):
@@ -62,5 +63,26 @@ class UserServices:
             )
         return "Login successful"
 
-    # @staticmethod
-    # def update_user(email: str, user_details: UserCreate, db: Session)
+    def update_user(self, email: str, user_details: UserCreate, db: Session) -> str:
+        db_user = db.query(Users).filter(Users.email == email).first()
+        if db_user is None:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND,
+                detail=f"User with {email=} not found!"
+            )
+
+        db_user.email = user_details.email
+        db_user.password = self.hash_password(user_details.password)
+        db_user.access_level = user_details.access_level
+        db_user.approved = user_details.approved
+        db_user.org_id = user_details.org_id
+
+        try:
+            db.commit()
+            db.refresh(db_user)
+            return "User updated successfully"
+        except Exception:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail=f"org_id '{user_details.org_id}' is invalid"
+            )

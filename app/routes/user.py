@@ -23,6 +23,10 @@ def create_user_router() -> APIRouter:
 
     @user_router.put("/update/", response_model=ActionConfirmation)
     async def update_user(email: str, user_details: UserCreate, db: Session = Depends(get_db)):
-        pass
+        msg = user_services\
+            .update_user(email=email, user_details=user_details, db=db)
+
+        msg_formatted = ActionConfirmation(message=msg)
+        return msg_formatted
 
     return user_router
