@@ -9,7 +9,7 @@ def create_app() -> FastAPI:
     # instantiate app
     app = FastAPI(
         title="Prioritization Strategy Tool",
-        description="Backend services",
+        description="Backend services"
     )
 
     # include routes in app
