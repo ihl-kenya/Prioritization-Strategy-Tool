@@ -1,8 +1,8 @@
 """Creating first Tables
 
-Revision ID: 851a25e5f327
+Revision ID: 8eac8169dfd0
 Revises: 
-Create Date: 2024-07-17 22:43:08.232254
+Create Date: 2024-07-18 08:52:17.146799
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '851a25e5f327'
+revision: str = '8eac8169dfd0'
 down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -33,7 +33,7 @@ def upgrade() -> None:
     op.create_index(op.f('ix_facilities_facility_name'), 'facilities', ['facility_name'], unique=False)
     op.create_index(op.f('ix_facilities_keph_level'), 'facilities', ['keph_level'], unique=False)
     op.create_index(op.f('ix_facilities_mfl_code'), 'facilities', ['mfl_code'], unique=False)
-    op.create_index(op.f('ix_facilities_org_id'), 'facilities', ['org_id'], unique=False)
+    op.create_index(op.f('ix_facilities_org_id'), 'facilities', ['org_id'], unique=True)
     op.create_table('organizations',
     sa.Column('org_id', sa.String(), nullable=False),
     sa.Column('org_name', sa.String(), nullable=True),
@@ -62,7 +62,7 @@ def upgrade() -> None:
     op.create_index(op.f('ix_products_product_name'), 'products', ['product_name'], unique=False)
     op.create_table('forecasts',
     sa.Column('forecast_id', sa.Integer(), autoincrement=True, nullable=False),
-    sa.Column('facility_id', sa.Integer(), nullable=True),
+    sa.Column('org_id', sa.String(), nullable=True),
     sa.Column('quantity_required_for_one_year', sa.Float(), nullable=True),
     sa.Column('product_id', sa.Integer(), nullable=True),
     sa.Column('ven', sa.String(), nullable=True),
@@ -70,11 +70,13 @@ def upgrade() -> None:
     sa.Column('value_of_quantities_required_for_12_months', sa.Float(), nullable=True),
     sa.Column('funding', sa.String(), nullable=True),
     sa.Column('pack_size', sa.String(), nullable=True),
-    sa.ForeignKeyConstraint(['facility_id'], ['facilities.facility_id'], ),
+    sa.Column('finacial_year', sa.String(), nullable=True),
+    sa.ForeignKeyConstraint(['org_id'], ['facilities.org_id'], ),
     sa.ForeignKeyConstraint(['product_id'], ['products.product_id'], ),
     sa.PrimaryKeyConstraint('forecast_id')
     )
     op.create_index(op.f('ix_forecasts_funding'), 'forecasts', ['funding'], unique=False)
+    op.create_index(op.f('ix_forecasts_org_id'), 'forecasts', ['org_id'], unique=False)
     op.create_index(op.f('ix_forecasts_ven'), 'forecasts', ['ven'], unique=False)
     op.create_table('users',
     sa.Column('user_id', sa.Integer(), autoincrement=True, nullable=False),
@@ -99,6 +101,7 @@ def downgrade() -> None:
     op.drop_index(op.f('ix_users_access_level'), table_name='users')
     op.drop_table('users')
     op.drop_index(op.f('ix_forecasts_ven'), table_name='forecasts')
+    op.drop_index(op.f('ix_forecasts_org_id'), table_name='forecasts')
     op.drop_index(op.f('ix_forecasts_funding'), table_name='forecasts')
     op.drop_table('forecasts')
     op.drop_index(op.f('ix_products_product_name'), table_name='products')

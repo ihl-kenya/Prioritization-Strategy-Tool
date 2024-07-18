@@ -11,4 +11,4 @@ class Facility(Base):
     keph_level = Column(String, nullable=False, index=True)
     mfl_code = Column(Integer, index=True)
     workload = Column(Integer)
-    org_id = Column(String, index=True)
+    org_id = Column(String, index=True, unique=True)
