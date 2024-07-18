@@ -18,3 +18,8 @@ class UserCreate(BaseModel):
 
 class ActionConfirmation(BaseModel):
     message: str
+
+
+class UserLogin(BaseModel):
+    email: str
+    password: str
