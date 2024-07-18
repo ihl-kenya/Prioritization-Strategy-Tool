@@ -16,5 +16,5 @@ class UserCreate(BaseModel):
     org_id: str
 
 
-class UserCreartedConfirmation(BaseModel):
+class ActionConfirmation(BaseModel):
     message: str
