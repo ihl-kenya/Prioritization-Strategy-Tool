@@ -2,7 +2,7 @@ from sqlalchemy import Column, String, Integer
 from .base import Base
 
 
-class Facility(Base):
+class Facilities(Base):
     __tablename__ = "facilities"
 
     facility_id = Column(Integer, primary_key=True)

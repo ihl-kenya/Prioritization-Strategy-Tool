@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, status
 from sqlalchemy.orm import Session
-from app.schemas import *
+from app.schemas import ActionConfirmation, UserCreate, UserLogin
 from app.config import get_db
 from app.services.user import UserServices
 
