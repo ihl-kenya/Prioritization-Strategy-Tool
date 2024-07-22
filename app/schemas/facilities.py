@@ -8,12 +8,14 @@ class Facility(BaseModel):
     facility_ownership: str
     keph_level: str
     mfl_code: int | None
-    # workload: int
+    workload: int
     org_id: str
 
 
-class MultipleFacilities(BaseModel):
-    facilities: list[Facility]
+class Organization(BaseModel):
+    org_id: str | None
+    org_name: str | None
+    mfl_code: int | None
 
 
 class FacilityOwnership(Enum):
