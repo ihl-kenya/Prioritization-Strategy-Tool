@@ -19,3 +19,11 @@ class ActionConfirmation(BaseModel):
 class UserLogin(BaseModel):
     email: EmailStr
     password: str
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "email": "user@example.com",
+                "password": "1234",
+            }
+        }

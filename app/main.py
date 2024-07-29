@@ -8,16 +8,16 @@ def create_app() -> FastAPI:
     facility_router = create_facility_router()
 
     # instantiate app
-    app = FastAPI(
+    server = FastAPI(
         title="Prioritization Strategy Tool",
         description="Backend services"
     )
 
     # include routes in app
-    app.include_router(user_router)
-    app.include_router(facility_router)
+    server.include_router(user_router)
+    server.include_router(facility_router)
 
-    return app
+    return server
 
 
 app = create_app()
